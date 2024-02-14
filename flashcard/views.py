@@ -138,3 +138,7 @@ def responder_flashcard(request, id):
     flashcard_desafio.acertou = True if acertou == "1" else False
     flashcard_desafio.save()
     return redirect(f'/flashcard/desafio/{desafio_id}')
+
+def relatorio(request, id):
+    desafio = Desafio.objects.get(id=id)
+    return render(request, 'relatorio.html', {'desafio': desafio})

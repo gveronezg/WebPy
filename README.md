@@ -1,15 +1,7 @@
 # WebPy
 
-20/01/2024 : 18:13
-aula 2 : 1:15:36
-
---/01/2024 :
-aula 2 : 1:35:00
-
+ambienteVirtual\Scripts\Activate
 super 1234
 
-30/01/2024 :
-aula 2 : 2:14:16
-
-07/02/2024 :
-aula 3 : 0:00:00
+aula 3
+16:30
