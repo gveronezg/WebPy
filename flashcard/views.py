@@ -102,11 +102,11 @@ def iniciar_desafio(request):
         flashcards = flashcards[:int(qtd_perguntas)]
 
         for f in flashcards:
-            flashcards_desafio = FlashcardDesafio(
+            flashcard_desafio = FlashcardDesafio(
                 flashcard = f
             )
-            flashcards_desafio.save()
-            desafio.flashcards.add(flashcards_desafio)
+            flashcard_desafio.save()
+            desafio.flashcards.add(flashcard_desafio)
         desafio.save()
 
         return redirect('/flashcard/listar_desafio/')
@@ -141,4 +141,23 @@ def responder_flashcard(request, id):
 
 def relatorio(request, id):
     desafio = Desafio.objects.get(id=id)
-    return render(request, 'relatorio.html', {'desafio': desafio})
+    acertos = desafio.flashcards.filter(acertou=True).count()
+    erros = desafio.flashcards.filter(acertou=False).count()
+    dados_pie = [acertos, erros]
+    categorias = desafio.categoria.all()
+
+    # forma mais básica
+    nome_categoria = []
+    for i in categorias:
+        nome_categoria.append(i.nome)
+
+    # forma mais avançada
+    nome_categoria = [i.nome for i in categorias]
+
+    dados_radar = []
+    for categoria in categorias:
+        dados_radar.append(desafio.flashcards.filter(flashcard__categoria=categoria).filter(acertou=True).count())
+
+    # TODO: Fazer o Ranking
+
+    return render(request, 'relatorio.html', {'desafio': desafio, 'dados_pie': dados_pie, 'categorias': nome_categoria, 'dados_radar': dados_radar})
