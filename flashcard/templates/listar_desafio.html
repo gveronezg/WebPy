@@ -16,20 +16,28 @@
         <br>
         <div class="row">
             <div class="col-md">
-                <form action="}" method="GET">
-                    <label for="">Categoria</label>
-                    <select name="categoria" class="form-select">
-                    </select>
-                </form>
+                <form action="{% url 'listar_desafio' %}" method="GET">
+                <label for="">Categoria</label>
+                <select name="categoria" class="form-select">
+                    <option value=""></option>
+                    {% for categoria in categorias %}
+                        <option value="{{categoria.id}}">{{categoria}}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="col-md">
                 <label for="">Dificuldade</label>
                 <select name="dificuldade" class="form-select">
+                    <option value=""></option>
+                        {% for dificuldade in dificuldades %}
+                            <option value="{{dificuldade.0}}">{{dificuldade.1}}</option>
+                        {% endfor %}
                 </select>
             </div>
             <div class="col-md">
                 <br>
                 <input type="submit" value="Filtrar" class="btn-cadastro">
+                </form>
             </div>
         </div>
         <br>

@@ -48,8 +48,7 @@ class Desafio(models.Model):
     )
     flashcards = models.ManyToManyField(FlashcardDesafio)
 
-    # TODO status
-
+    # TODO fazer o status do desafio
     def __str__(self):
         return self.titulo
     def status(self):

@@ -113,9 +113,17 @@ def iniciar_desafio(request):
     
 def listar_desafio(request):
     desafios = Desafio.objects.filter(user=request.user)
-    # Desafio: desenvolver os status
-    # ToDo: desenvolver os filtros
-    return render(request, 'listar_desafio.html', {'desafios': desafios})
+    categorias = Categoria.objects.all()
+    dificuldades = Flashcard.DIFICULDADE_CHOICES
+    categoria = request.GET.get('categoria')
+    dificuldade = request.GET.get('dificuldade')
+    
+    if categoria:
+        desafios = desafios.filter(categoria__id=categoria)
+    if dificuldade:
+        desafios = desafios.filter(dificuldade=dificuldade)
+
+    return render(request, 'listar_desafio.html', {'desafios': desafios, 'categorias': categorias, 'dificuldades': dificuldades, 'categoria': categoria, 'dificuldade': dificuldade})
 
 def desafio(request, id):
     desafio = Desafio.objects.get(id=id)

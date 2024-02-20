@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Apostila, ViewApostila
+from .models import Apostila, ViewApostila, Tags
 from django.contrib.messages import constants
 from django.contrib import messages
 
@@ -21,6 +21,20 @@ def adicionar_apostilas(request):
         )
 
         apostila.save()
+
+        # TODO: Criar as tags
+        tags = request.POST.get('tags')
+        list_tags = tags.split(',')
+
+        for tag in list_tags:
+            nova_tag = Tags(
+                nome=tag
+            )
+            nova_tag.save()
+            apostila.tags.add(nova_tag)
+
+        apostila.save()
+
         messages.add_message(request, constants.SUCCESS, 'Salvo com sucesso!')
 
         return redirect('/apostilas/adicionar_apostilas')
